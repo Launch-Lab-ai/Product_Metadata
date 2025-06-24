@@ -36,7 +36,7 @@ home_keywords = [
     'home furnishing', 'organizer', 'tablecloth'
 ]
 
-# === Step 4: Label assignment (single label based on priority) ===
+# === Step 4: Label assignment ===
 def assign_final_bucket(row):
     name = str(row['product_name']) if pd.notnull(row['product_name']) else ''
     desc = str(row['description']) if pd.notnull(row['description']) else ''
@@ -67,26 +67,26 @@ print("\n📦 Product Counts by Final Bucket:")
 for label, count in bucket_counts.items():
     print(f"➡️  {label:15s}: {count}")
 
-# Optional: Bar chart
-# plt.figure(figsize=(8, 4))
-# plt.bar(bucket_counts.index, bucket_counts.values, color='skyblue')
-# plt.title("Final Product Bucket Counts")
-# plt.xlabel("Bucket")
-# plt.ylabel("Count")
-# plt.xticks(rotation=15)
-# plt.tight_layout()
-# plt.show()
+# === Step 7: Visualization ===
+plt.figure(figsize=(10, 6))
+bars = plt.bar(bucket_counts.index, bucket_counts.values, color=['#5DADE2', '#58D68D', '#F4D03F', '#EC7063', '#A569BD'])
+
+# Add value labels on top of each bar
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval + 100, f'{yval}', ha='center', va='bottom', fontsize=10, fontweight='bold')
+
+plt.title("📊 Product Count per Bucket", fontsize=16)
+plt.xlabel("Bucket", fontsize=12)
+plt.ylabel("Number of Products", fontsize=12)
+plt.xticks(fontsize=11)
+plt.yticks(fontsize=11)
+plt.tight_layout()
+plt.grid(axis='y', linestyle='--', alpha=0.4)
+plt.show()
 
 
-# # Uncomment to show chart
-# plt.figure(figsize=(10, 5))
-# plt.bar(desired_order, counts_ordered, color='skyblue')
-# plt.title('📊 Product Count per Bucket')
-# plt.xlabel('Bucket')
-# plt.ylabel('Number of Products')
-# plt.xticks(rotation=20)
-# plt.tight_layout()
-# plt.show()
+
 
 # # === Step 7: Print individual bucket counts ===
 # print("\n📦 Product Counts by Bucket:")
