@@ -69,7 +69,7 @@ for label, count in bucket_counts.items():
 
 # === Step 7: Visualization ===
 plt.figure(figsize=(10, 6))
-bars = plt.bar(bucket_counts.index, bucket_counts.values, color=['#5DADE2', '#58D68D', '#F4D03F', '#EC7063', '#A569BD'])
+bars = plt.bar(bucket_counts.index, bucket_counts.values, color=[ '#A569BD',  '#F4D03F', '#58D68D', '#EC7063', '#5DADE2'])
 
 # Add value labels on top of each bar
 for bar in bars:
