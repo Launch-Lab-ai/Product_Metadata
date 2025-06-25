@@ -16,27 +16,31 @@ df['discount_percent'] = df.apply(calculate_discount, axis=1)
 
 # === Step 3: Define keyword sets ===
 clothing_keywords = [
-    'shirt', 'dress', 'apparel', 'footwear', 'saree', 'kurta', 'kurti',
-    'tunic', 'anarkali', 'shoes', 'stylish', 'ethnic', 'trendy',
-    'fashionwear', 'floral print', 'style code'
+    'shirt', 'dress', 'apparel', 'saree', 'kurta', 'kurti', 'tunic',
+    'anarkali', 'stylish', 'ethnic', 'trendy', 'fashionwear', 'floral print', 'style code',
+    't-shirt', 'blouse', 'leggings', 'jeans', 'jacket', 'sweater',
+    'boots', 'casual shoes', 'sandals', 'heels', 'footwear', "boy's", "girl's"
 ]
 
 jewelry_keywords = [
-    'wristwatch', 'watch', 'ring', 'diamond', 'gold', 'silver',
-    'jewellery', 'jewelry', 'bracelet', 'necklace', 'cubic zirconia'
+    'wristwatch', 'watch', 'analog watch', 'digital watch', 'bracelet', 'ring',
+    'diamond', 'gold', 'silver', 'jewellery', 'jewelry', 'necklace', 'cubic zirconia',
+    'chronograph', 'quartz', 'sapphire crystal'
 ]
 
 tech_keywords = [
     'usb', 'bluetooth', 'led', 'electronics', 'sound mixer', 'equalizer',
     'dj', 'digital display', 'smartphone', 'tablet', 'headphones', 'earphones',
-    'amplifier', 'charger', 'adapter', 'speaker', 'hdmi'
+    'amplifier', 'charger', 'adapter', 'speaker', 'hdmi', 'tech', 'gadget',
+    'cctv', 'bnc', 'connector', 'wire', 'cable', 'surveillance'
 ]
 
 home_keywords = [
     'kitchen', 'decor', 'wall art', 'wall sticker', 'planter',
     'storage box', 'laundry bag', 'bed sheet', 'curtain',
     'cutlery', 'cookware', 'lamp', 'cushion', 'vase', 'photo frame',
-    'home furnishing', 'organizer', 'tablecloth'
+    'home furnishing', 'organizer', 'tablecloth', 'sofa', 'carpet', 'mat', 'blanket',
+    'notebook', 'diary', 'coin bank', 'stationery'
 ]
 
 # === Step 4: Label assignment ===
@@ -46,13 +50,13 @@ def assign_final_bucket(row):
     cat = str(row['product_category_tree']) if pd.notnull(row['product_category_tree']) else ''
     text = f"{name} {desc} {cat}".lower()
 
-    if any(kw in text for kw in jewelry_keywords):
+    if any(kw in text for kw in jewelry_keywords) or 'wrist watches' in cat.lower():
         return "Jewelry"
-    elif any(kw in text for kw in clothing_keywords):
+    elif any(kw in text for kw in clothing_keywords) or 'clothing' in cat.lower() or 'apparel' in cat.lower() or 'footwear' in cat.lower():
         return "Clothing"
     elif any(kw in text for kw in tech_keywords):
         return "Tech & Gadgets"
-    elif any(kw in text for kw in home_keywords):
+    elif any(kw in text for kw in home_keywords) or 'decor' in cat.lower() or 'stationery' in cat.lower():
         return "Home & Decor"
     elif row['retail_price'] < 500 or row['discount_percent'] > 60:
         return "Budget Essentials"
@@ -83,28 +87,29 @@ def assign_confident_bucket(row):
 
     return 'Uncertain'
 
+# === Step 5: Apply confident labeling first ===
 df['confident_bucket'] = df.apply(assign_confident_bucket, axis=1)
 labeled_df = df[df['confident_bucket'] != 'Uncertain']
 labeled_df.to_csv('./data/flipkart_labeled_seed.csv', index=False)
 
+# === Step 6: Apply full label logic ===
 df['final_bucket'] = df.apply(assign_final_bucket, axis=1)
 
-# === Step 5: Save labeled dataset ===
+# === Step 7: Save labeled dataset ===
 df.to_csv('./data/flipkart_buckets_single_label.csv', index=False)
 print("✅ Saved final labeled data to './data/flipkart_buckets_single_label.csv'")
 
-# === Step 6: Bucket counts ===
+# === Step 8: Bucket counts ===
 bucket_counts = df['final_bucket'].value_counts()
 
 print("\n📦 Product Counts by Final Bucket:")
 for label, count in bucket_counts.items():
     print(f"➡️  {label:18s}: {count}")
 
-# === Step 7: Visualization ===
+# === Step 9: Visualization ===
 plt.figure(figsize=(10, 6))
 bars = plt.bar(bucket_counts.index, bucket_counts.values, color=['#5DADE2', '#EC7063', '#58D68D', '#A569BD', '#F4D03F', '#95A5A6'])
 
-# Add value labels on top of each bar
 for bar in bars:
     yval = bar.get_height()
     plt.text(bar.get_x() + bar.get_width()/2, yval + 100, f'{yval}', ha='center', va='bottom', fontsize=10, fontweight='bold')
@@ -117,3 +122,16 @@ plt.yticks(fontsize=11)
 plt.tight_layout()
 plt.grid(axis='y', linestyle='--', alpha=0.4)
 plt.show()
+
+# === Step 10: View Sample Uncategorized Products ===
+print("\n🔎 Sample 'Uncategorized' Products (Name + Description + Category):\n")
+
+uncategorized_df = df[df['final_bucket'] == 'Uncategorized'].head(20)
+
+for i, row in uncategorized_df.iterrows():
+    print(f"🟦 Product {i+1}")
+    print(f"🔹 Name       : {row['product_name']}")
+    print(f"📝 Description: {row.get('description', 'N/A')}")
+    print(f"🏷️  Category  : {row.get('product_category_tree', 'N/A')}")
+    print(f"💰 Price      : ₹{row['retail_price']}")
+    print("-" * 80)
