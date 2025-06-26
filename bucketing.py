@@ -114,15 +114,15 @@ for bar in bars:
     yval = bar.get_height()
     plt.text(bar.get_x() + bar.get_width()/2, yval + 100, f'{yval}', ha='center', va='bottom', fontsize=10, fontweight='bold')
 
-plt.title("📊 Product Count per Bucket", fontsize=16)
-plt.xlabel("Bucket", fontsize=12)
-plt.ylabel("Number of Products", fontsize=12)
-plt.xticks(rotation=15, fontsize=11)
+plt.title("Product Count per Bucket", fontsize=16)
+plt.xlabel("Bucket", fontsize=12, fontweight='bold')
+plt.ylabel("Number of Products", fontsize=12, fontweight='bold')
+plt.xticks(rotation=0, fontsize=11)
 plt.yticks(fontsize=11)
 plt.tight_layout()
 plt.grid(axis='y', linestyle='--', alpha=0.4)
 
-plt.savefig('./data/bucket_distribution.png', dpi=300, bbox_inches='tight')
+plt.savefig('./figures/bucket_distribution.png', dpi=300, bbox_inches='tight')
 
 plt.show()
 

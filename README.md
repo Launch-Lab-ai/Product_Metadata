@@ -48,6 +48,6 @@ Use it to verify data health before modeling.
 
 ## 📊 Sample Bucket Distribution
 
-![Bucket Distribution Chart](./data/bucket_distribution.png)
+![Bucket Distribution Chart](./figures/bucket_distribution.png)
 
 ---
