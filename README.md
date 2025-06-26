@@ -75,10 +75,10 @@
 ## 📊 Sample Visualizations
 
 ### Final Bucket Distribution (Rule-based)
-![Rule-based Buckets](./figures/bucket_distribution.png)
+![Rule-based Buckets](./figures/flipkart/bucket_distribution.png)
 
 ### Predicted Bucket Distribution (ML Model)
-![Predicted Buckets](./figures/bucket_prediction.png)
+![Predicted Buckets](./figures/flipkart/bucket_prediction.png)
 
 
 ---
