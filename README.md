@@ -83,6 +83,32 @@
 
 ---
 
+## 🛒 Amazon Product Categorization
+
+Amazon's product dataset (2.2M+ rows) was categorized into 11 buckets using a keyword-based approach applied on `TITLE`, `DESCRIPTION`, and `BULLET_POINTS`.
+
+### 🧠 Buckets Used
+- Clothing  
+- Jewelry  
+- Tech & Gadgets  
+- Home & Decor  
+- Furniture & Fixtures  
+- Footwear  
+- Auto & Industrial  
+- Books & Media  
+- Beauty & Personal Care  
+- Gifts & Collectibles  
+- Uncategorized (fallback)
+
+### ✅ Final Bucket Counts
+
+![Rule-based Buckets](./figures/amazon/bucket_distribution.png)
+
+
+---
+
+
+
 ## ✨ Summary
 
 This pipeline supports:
