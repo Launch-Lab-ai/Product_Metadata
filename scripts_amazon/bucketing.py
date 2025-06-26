@@ -129,6 +129,11 @@ for label, count in bucket_counts.items():
 #     print(f"📝 DESCRIPTION: {row['DESCRIPTION']}")
 #     print(f"📌 BULLETS    : {row['BULLET_POINTS']}\n{'-'*80}")
 
+# === Step 6: Save Final Bucket Counts to CSV ===
+bucket_df = pd.DataFrame(list(bucket_counts.items()), columns=['Bucket', 'Count'])
+bucket_df.to_csv('./data/amazon/final_bucket_plot.csv', index=False)
+
+
 # === Step 7: Visualization ===
 plt.figure(figsize=(10, 6))
 labels = list(bucket_counts.keys())
@@ -143,8 +148,8 @@ for bar in bars:
 plt.title("Product Count per Bucket", fontsize=16)
 plt.xlabel("Bucket", fontsize=12, fontweight='bold')
 plt.ylabel("Number of Products", fontsize=12, fontweight='bold')
-plt.xticks(rotation=15, fontsize=11)
-plt.yticks(fontsize=11)
+plt.xticks(rotation=15, fontsize=9)
+plt.yticks(fontsize=8)
 plt.tight_layout()
 plt.grid(axis='y', linestyle='--', alpha=0.4)
 plt.savefig('./figures/amazon/bucket_distribution.png', dpi=300, bbox_inches='tight')
