@@ -1,53 +1,96 @@
 # 🛒 Flipkart Product Categorization
 
 
-## 🔍 data_checker_script.py
+## 🧪 Diagnostic Script
 
-- Shows shape, missing values, data types
-- Detects:
-  - Duplicate products
-  - Price inconsistencies
-  - Invalid ratings
-  - Outliers in price
+**File:** `data_checker_script.py`
 
-Use it to verify data health before modeling.
+- Checks:
+  - Missing values
+  - Duplicates
+  - Rating outliers
+  - Price mismatches
+  - Specification format
+- Helpful for debugging raw or intermediate datasets
 
----
-
-## 🧼 cleaning.py
-
-- Replaces "No rating available" with NaN
-- Converts rating fields to numeric
-- Fills missing brand names
-- Lowercases text fields
-- Handles missing price data
-
-➡️ Saves: `flipkart_cleaned.csv`
 
 ---
 
-## 🧠 bucketing.py
+## 🧼 1. Data Cleaning
 
-- Adds `discount_percent`
-- Buckets into:
-  - Clothing
-  - Jewelry
-  - Tech & Gadgets
-  - Home & Decor
-  - Budget Essentials
-  - Uncategorized
-- Uses keywords, categories, and price
-- Visualizes bucket counts
+**File:** `cleaning.py`
 
-➡️ Saves:
-- `flipkart_labeled_seed.csv` (confident labels)
-- `flipkart_buckets_single_label.csv` (full labels)
-- `bucket_distribution.png` (bar chart)
+- Replaces `"No rating available"` with NaN
+- Converts numeric fields
+- Standardizes text columns to lowercase
+- Fills missing prices and brand info
+- Saves cleaned output to:  
+  ✅ `./data/flipkart_cleaned.csv`
 
 ---
 
-## 📊 Sample Bucket Distribution
+## 🧠 2. Rule-Based Bucketing
 
-![Bucket Distribution Chart](./figures/bucket_distribution.png)
+**File:** `bucketing.py`
+
+- Uses keyword sets to assign product buckets like:
+  - `Clothing`, `Jewelry`, `Home & Decor`, `Tech & Gadgets`, `Budget Essentials`
+- Applies two-step logic:
+  1. Strict `confident_bucket` for clean training data
+  2. Broader `final_bucket` labeling
+- Saves outputs:
+  - ✅ `./data/flipkart_labeled_seed.csv` (for training)
+  - ✅ `./data/flipkart_buckets_single_label.csv`
+  - 📊 Chart: `./figures/bucket_distribution.png`
+
 
 ---
+
+## 🎓 3. Model Training
+
+**File:** `training_model.py`
+
+- Trains a `RandomForestClassifier` on `confident_bucket` examples
+- Uses `TF-IDF` vectorizer over name + description + category
+- Outputs:
+  - ✅ Trained model: `./models/bucket_classifier.pkl`
+  - ✅ Vectorizer: `./models/vectorizer.pkl`
+  - 🧪 Evaluation: classification report printed in console
+
+---
+
+## 🚀 4. Prediction Using Trained Model
+
+**File:** `predict_bucket.py`
+
+- Loads cleaned data and applies the model
+- Predicts bucket labels using trained classifier
+- Saves results to:  
+  ✅ `./data/predicted_buckets.csv`
+- 📊 Saves prediction bar chart to:  
+  📈 `./figures/predicted_bucket_chart.png`
+
+---
+
+## 📊 Sample Visualizations
+
+### Final Bucket Distribution (Rule-based)
+![Rule-based Buckets](./figures/bucket_distribution.png)
+
+### Predicted Bucket Distribution (ML Model)
+![Predicted Buckets](./figures/bucket_prediction.png)
+
+
+---
+
+## ✨ Summary
+
+This pipeline supports:
+- 🔍 **Clean data transformation**
+- 🧠 **Semi-supervised labeling using heuristics**
+- 🤖 **Supervised model training for scalable classification**
+- 📊 **Insightful visualizations for distribution**
+
+---
+
+
