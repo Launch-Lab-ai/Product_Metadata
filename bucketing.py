@@ -121,7 +121,12 @@ plt.xticks(rotation=15, fontsize=11)
 plt.yticks(fontsize=11)
 plt.tight_layout()
 plt.grid(axis='y', linestyle='--', alpha=0.4)
+
+plt.savefig('./data/bucket_distribution.png', dpi=300, bbox_inches='tight')
+
 plt.show()
+
+
 
 # # === Step 10: View Sample Uncategorized Products ===
 # print("\n🔎 Sample 'Uncategorized' Products (Name + Description + Category):\n")
