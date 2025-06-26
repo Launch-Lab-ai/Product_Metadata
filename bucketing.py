@@ -123,15 +123,15 @@ plt.tight_layout()
 plt.grid(axis='y', linestyle='--', alpha=0.4)
 plt.show()
 
-# === Step 10: View Sample Uncategorized Products ===
-print("\n🔎 Sample 'Uncategorized' Products (Name + Description + Category):\n")
+# # === Step 10: View Sample Uncategorized Products ===
+# print("\n🔎 Sample 'Uncategorized' Products (Name + Description + Category):\n")
 
-uncategorized_df = df[df['final_bucket'] == 'Uncategorized'].head(20)
+# uncategorized_df = df[df['final_bucket'] == 'Uncategorized'].head(20)
 
-for i, row in uncategorized_df.iterrows():
-    print(f"🟦 Product {i+1}")
-    print(f"🔹 Name       : {row['product_name']}")
-    print(f"📝 Description: {row.get('description', 'N/A')}")
-    print(f"🏷️  Category  : {row.get('product_category_tree', 'N/A')}")
-    print(f"💰 Price      : ₹{row['retail_price']}")
-    print("-" * 80)
+# for i, row in uncategorized_df.iterrows():
+#     print(f"🟦 Product {i+1}")
+#     print(f"🔹 Name       : {row['product_name']}")
+#     print(f"📝 Description: {row.get('description', 'N/A')}")
+#     print(f"🏷️  Category  : {row.get('product_category_tree', 'N/A')}")
+#     print(f"💰 Price      : ₹{row['retail_price']}")
+#     print("-" * 80)
