@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from collections import Counter
 
 # === Step 1: Load cleaned data ===
-df = pd.read_csv('./data/flipkart_cleaned.csv')
+df = pd.read_csv('./data/flipkart/flipkart_cleaned.csv')
 
 # === Step 2: Add discount percent ===
 def calculate_discount(row):
@@ -90,14 +90,14 @@ def assign_confident_bucket(row):
 # === Step 5: Apply confident labeling first ===
 df['confident_bucket'] = df.apply(assign_confident_bucket, axis=1)
 labeled_df = df[df['confident_bucket'] != 'Uncertain']
-labeled_df.to_csv('./data/flipkart_labeled_seed.csv', index=False)
+labeled_df.to_csv('./data/flipkart/flipkart_labeled_seed.csv', index=False)
 
 # === Step 6: Apply full label logic ===
 df['final_bucket'] = df.apply(assign_final_bucket, axis=1)
 
 # === Step 7: Save labeled dataset ===
-df.to_csv('./data/flipkart_buckets_single_label.csv', index=False)
-print("✅ Saved final labeled data to './data/flipkart_buckets_single_label.csv'")
+df.to_csv('./data/flipkart/flipkart_buckets_single_label.csv', index=False)
+print("✅ Saved final labeled data to './data/flipkart/flipkart_buckets_single_label.csv'")
 
 # === Step 8: Bucket counts ===
 bucket_counts = df['final_bucket'].value_counts()
@@ -122,7 +122,7 @@ plt.yticks(fontsize=11)
 plt.tight_layout()
 plt.grid(axis='y', linestyle='--', alpha=0.4)
 
-plt.savefig('./figures/bucket_distribution.png', dpi=300, bbox_inches='tight')
+plt.savefig('./figures/flipkart/bucket_distribution.png', dpi=300, bbox_inches='tight')
 
 plt.show()
 

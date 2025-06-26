@@ -9,7 +9,7 @@ model = joblib.load('./models/bucket_classifier.pkl')
 vectorizer = joblib.load('./models/vectorizer.pkl')
 
 # === Step 2: Load full cleaned data ===
-df = pd.read_csv('./data/flipkart_cleaned.csv')
+df = pd.read_csv('./data/flipkart/flipkart_cleaned.csv')
 
 # === Step 3: Combine text fields for prediction ===
 df['text'] = (df['product_name'].fillna('') + ' ' +
@@ -22,8 +22,8 @@ df['predicted_bucket'] = model.predict(X_full)
 
 # === Step 5: Save predictions ===
 os.makedirs('./data', exist_ok=True)
-df.to_csv('./data/predicted_buckets.csv', index=False)
-print("✅ Predictions saved to './data/predicted_buckets.csv'")
+df.to_csv('./data/flipkart/predicted_buckets.csv', index=False)
+print("✅ Predictions saved to './data/flipkart/predicted_buckets.csv'")
 
 # === Step 6: Bucket counts ===
 bucket_counts = df['predicted_bucket'].value_counts().sort_values(ascending=False)
@@ -52,6 +52,6 @@ plt.grid(axis='y', linestyle='--', alpha=0.4)
 
 # Save and show
 os.makedirs('./figures', exist_ok=True)
-plt.savefig('./figures/bucket_prediction.png', dpi=300, bbox_inches='tight')
-print("🖼️ Saved bar chart to './figures/bucket_prediction.png'")
+plt.savefig('./figures/flipkart/bucket_prediction.png', dpi=300, bbox_inches='tight')
+print("🖼️ Saved bar chart to './figures/flipkart/bucket_prediction.png'")
 plt.show()
