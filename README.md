@@ -83,11 +83,15 @@
 
 ---
 
+
 ## 🛒 Amazon Product Categorization
 
-Amazon's product dataset (2.2M+ rows) was categorized into 11 buckets using a keyword-based approach applied on `TITLE`, `DESCRIPTION`, and `BULLET_POINTS`.
+Amazon's product dataset (2.2M+ rows) was categorized into 11 `semantic buckets`. This was done in two phases:
+
+---
 
 ### 🧠 Buckets Used
+
 - Clothing  
 - Jewelry  
 - Tech & Gadgets  
@@ -98,25 +102,38 @@ Amazon's product dataset (2.2M+ rows) was categorized into 11 buckets using a ke
 - Books & Media  
 - Beauty & Personal Care  
 - Gifts & Collectibles  
-- Uncategorized (fallback)
-
-### ✅ Final Bucket Counts
-
-![Rule-based Buckets](./figures/amazon/bucket_distribution.png)
-
+- Uncategorized (used only during rule-based phase)
 
 ---
 
+1. 🔍 **Rule-based Labeling**  
+   Keyword heuristics were applied to `TITLE`, `DESCRIPTION`, and `BULLET_POINTS` to assign initial labels.
 
+   ![Destributed Buckets](./figures/amazon/bucket_distribution.png)
+
+2. 🤖 **ML-based Classification**  
+   A supervised learning model (`Logistic Regression` with `TF-IDF` features) was trained on the labeled data to generalize predictions across the full dataset.
+
+
+### 📊 Final Bucket Counts (Predicted by Model)
+
+
+![ML-Predicted Buckets](./figures/amazon/bucket_prediction.png)
+
+
+> ✅ No items were labeled as "Uncategorized" by the ML model.
+
+
+---
 
 ## ✨ Summary
 
 This pipeline supports:
-- 🔍 **Clean data transformation**
+
+- 🧹 **Clean data transformation**
 - 🧠 **Semi-supervised labeling using heuristics**
-- 🤖 **Supervised model training for scalable classification**
-- 📊 **Insightful visualizations for distribution**
+- 🤖 **Supervised model training (TF-IDF + Logistic Regression)**
+- 📈 **Efficient batch prediction & progress tracking**
+- 📊 **Insightful visualizations of final distribution**
 
 ---
-
-
