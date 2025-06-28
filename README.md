@@ -90,6 +90,18 @@ Amazon's product dataset (2.2M+ rows) was categorized into 11 `semantic buckets`
 
 ---
 
+
+### 📁 Note on Data File
+
+> ⚠️ The original `train.csv` file (~1.45 GB) is **not included in this repository** due to its size.  
+> You will need to manually place `train.csv` inside the `data/amazon/` directory.  
+> Once done, run: `cleaning.py`
+> Then execute: `bucketing.py`
+> You will be able to generate the same visualizations as shown below.
+
+
+---
+
 ### 🧠 Buckets Used
 
 - Clothing  
